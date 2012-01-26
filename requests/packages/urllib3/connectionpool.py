@@ -6,6 +6,7 @@
 
 import logging
 import socket
+import sys
 
 from socket import error as SocketError, timeout as SocketTimeout
 
@@ -31,6 +32,7 @@ try:   # Compiled with SSL?
     import ssl
     BaseSSLError = ssl.SSLError
 except ImportError:
+    sys.stderr.write("no ssl support\n")
     ssl = None
     BaseSSLError = None
 

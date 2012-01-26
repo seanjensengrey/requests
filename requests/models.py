@@ -28,7 +28,7 @@ from .utils import (
     get_encoding_from_headers, stream_decode_response_unicode,
     stream_decompress, guess_filename, requote_path, dict_from_string)
 
-from .compat import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, str, bytes, SimpleCookie, is_py3, is_py2
+from .compat import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, str, bytes, SimpleCookie, is_py3, is_py2, is_jython
 
 # Import chardet if it is available.
 try:
@@ -314,7 +314,11 @@ class Request(object):
         if not scheme:
             raise ValueError("Invalid URL %r: No schema supplied" % url)
 
-        netloc = netloc.encode('idna').decode('utf-8')
+        # temporary jython fix
+        if not is_jython:
+            netloc = netloc.encode('idna').decode('utf-8')
+        else:
+            netloc = netloc.encode('utf-8').decode('utf-8')
 
         if is_py2:
             if isinstance(path, str):
