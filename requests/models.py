@@ -9,6 +9,7 @@ This module contains the primary objects that power Requests.
 
 import os
 from datetime import datetime
+import sys
 
 from .hooks import dispatch_hook, HOOKS
 from .structures import CaseInsensitiveDict
@@ -31,10 +32,19 @@ from .utils import (
 from .compat import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, str, bytes, SimpleCookie, is_py3, is_py2, is_jython
 
 # Import chardet if it is available.
+# jython compatible chardet
+# https://github.com/seanjensengrey/chardet/commit/967fd82720f8630aab9424a5be0278d22bcc8240
 try:
     if is_jython:
-        # chardet and python do not get along and jython already has decent unicode support
-        pass
+        try:
+            import chardet
+            if hasattr(chardet,'has_jython_support') and chardet.has_jython_support == True:
+                sys.stderr.write("using jython supported chardet\n")
+            else:
+                sys.stderr.write("chardet doesn't have jython support\n")
+                del chardet
+        except ImportError:
+            pass
     else:
         import chardet
 except ImportError:
