@@ -4,7 +4,7 @@
 import os
 import sys
 import requests
-from requests.compat import is_py3
+from requests.compat import is_py3, is_jython, is_py24, is_py25
 
 try:
     from setuptools import setup
@@ -27,6 +27,9 @@ if is_py3:
     required.append('chardet2')
 else:
     required.append('chardet>=1.0.0')
+
+if is_jython or is_py24 or is_py25:
+    required.append('simplejson>=2.3.0')
 
 
 setup(
@@ -57,6 +60,7 @@ setup(
         'Natural Language :: English',
         'License :: OSI Approved :: ISC License (ISCL)',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',

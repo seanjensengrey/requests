@@ -10,9 +10,9 @@ init:
 	pip install -r requirements.txt
 
 test:
-	nosetests --with-color test_requests.py
-	nosetests --with-color test_requests_ext.py
-	nosetests --with-color test_requests_async.py
+	nosetests -s --with-color test_requests.py
+	nosetests -s --with-color test_requests_ext.py
+	nosetests -s --with-color test_requests_async.py
 
 
 test-2.5:

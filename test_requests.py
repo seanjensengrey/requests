@@ -28,6 +28,8 @@ if (sys.platform == 'win32') and ('HTTPBIN_URL' not in os.environ):
 PORT = os.environ.get('HTTPBIN_PORT', '7077')
 HTTPBIN_URL = os.environ.get('HTTPBIN_URL', 'http://0.0.0.0:%s/' % (PORT))
 
+print "Using test url of:", HTTPBIN_URL
+
 
 def httpbin(*suffix):
     """Returns url for HTTPBIN resource."""
