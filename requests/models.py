@@ -32,7 +32,11 @@ from .compat import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, u
 
 # Import chardet if it is available.
 try:
-    import chardet
+    if is_jython:
+        # chardet and python do not get along and jython already has decent unicode support
+        pass
+    else:
+        import chardet
 except ImportError:
     pass
 
